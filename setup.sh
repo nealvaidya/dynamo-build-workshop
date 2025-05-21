@@ -58,6 +58,8 @@ retry_with_backoff() {
 # Download model with retry logic
 retry_with_backoff huggingface-cli download deepseek-ai/DeepSeek-R1-Distill-Llama-8B
 
+HF_HUB_OFFLINE=1
+
 jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --ServerApp.root_dir=/workspace/dynamo-build-workshop
 
 

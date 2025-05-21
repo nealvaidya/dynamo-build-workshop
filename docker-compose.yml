@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+networks:
+  dynamo-network:
+    driver: bridge
+
 services:
   nats-server:
     image: nats
@@ -21,6 +25,8 @@ services:
       - 4222:4222
       - 6222:6222
       - 8222:8222
+    networks:
+      - dynamo-network
 
   etcd-server:
     image: bitnami/etcd
@@ -29,9 +35,11 @@ services:
     ports:
       - 2379:2379
       - 2380:2380
+    networks:
+      - dynamo-network
 
   dynamo:
-    image: nvcr.io/nvidia/cuda-dl-base:25.03-cuda12.8-devel-ubuntu24.04
+    image: ghcr.io/nnshah1/dynamo:dev
     volumes:
       - /home/ubuntu/dynamo-build-workshop:/workspace/dynamo-build-workshop
       # - /mnt/nealv/dynamo/dynamo-build-workshop:/workspace/dynamo-build-workshop
@@ -50,4 +58,9 @@ services:
     ulimits:
       memlock: -1
       stack: 67108864
+    networks:
+      - dynamo-network
+    environment:
+      - ETCD_ENDPOINTS=http://etcd-server:2379
+      - NATS_SERVER=nats://nats-server:4222
 
