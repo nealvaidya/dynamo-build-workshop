@@ -39,10 +39,11 @@ services:
       - dynamo-network
 
   dynamo:
-    image: ghcr.io/nnshah1/dynamo:dev
+    image: ghcr.io/nnshah1/dynamo:dev_1
+    pull_policy: always
     volumes:
-      - /home/ubuntu/dynamo-build-workshop:/workspace/dynamo-build-workshop
-      # - /mnt/nealv/dynamo/dynamo-build-workshop:/workspace/dynamo-build-workshop
+      # - /home/ubuntu/dynamo-build-workshop:/workspace/dynamo-build-workshop
+      - /mnt/nealv/dynamo/dynamo-build-workshop:/workspace/dynamo-build-workshop
     working_dir: /workspace/dynamo-build-workshop
     ports:
       - 8888:8888
